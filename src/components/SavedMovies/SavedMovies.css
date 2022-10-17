@@ -1,0 +1,14 @@
+.saved-movies{
+    width: 100vw;
+    padding: 0 30px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: #202020;
+  }
+    
+  @media screen and (max-width: 769px){
+    .saved-movies{
+      padding: 0;
+    }
+  }

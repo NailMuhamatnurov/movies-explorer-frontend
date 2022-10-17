@@ -1,0 +1,198 @@
+.student {
+  padding-bottom: 5px;
+  background-color: #202020;
+  color: #FFFFFF;
+  padding-top: 40px;
+}
+
+.about-me__std {
+  padding-top: 55px;
+}
+
+.about-me {
+  display: grid;
+  grid-template-columns: 6.4fr 2.5fr;
+  grid-template-rows: 326px;
+  justify-content: space-between;
+  padding-top: 66px;
+}
+
+.about-me__title {
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 1.16;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.about-me__subtitle {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.1;
+  margin: 18px 0 0;
+}
+
+.about-me__info-frame {
+  display: flex;
+  max-width: 600px;
+  margin-right: 49px;
+  flex-direction: column;
+  justify-content: space-between;
+}  
+
+.about-me__text {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.57;
+  margin: 26px 0 0;
+}
+
+.about-me__link {
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  line-height: 1.2;
+  color: #FFFFFF;
+}
+
+.about-me__frame {
+  max-width: 270px;
+  max-height: 327px;
+  border-radius: 10px;
+}
+
+.about-me__photo {
+  border-radius: 10px;
+  object-fit: contain;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.about-me__line {
+  width: 89%;
+}
+
+@media screen and (max-width: 1200px) {
+  .about-me {
+    grid-template-columns: 6fr 2.5fr;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .about-me {
+    grid-template-columns: 5fr 2.5fr;
+    grid-template-rows: 350px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .about-me {
+    grid-template-columns: 4fr 2.5fr;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .about-me__title {
+    font-size: 40px;
+    line-height: 1;
+  }
+
+  .about-me__subtitle {
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 16px 0 0;
+  }
+
+  .about-me__text {
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 20px 0 0;
+  }
+
+  .student {
+    padding-top: 35px;
+  }
+
+  .about-me {
+    grid-template-columns: 3fr 2.2fr;
+    grid-template-rows: 305px;
+  }
+
+  .about-me__frame {
+    max-width: 250px;
+    max-height: 310px;
+  }
+
+  .about-me__line {
+    width: 87%;
+  }
+}
+
+@media screen and (max-width: 656px){
+  .about-me {
+    grid-template-columns: 2.6fr 2.2fr;
+    grid-template-rows: 345px;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .about-me__title{
+    font-size: 30px;
+    line-height: 1.2;
+  }
+
+  .about-me__subtitle{
+    margin: 20px 0 0;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .about-me__text{
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .about-me__student{
+    margin-top: 0px;
+  }
+
+  .about-me {
+    grid-template-columns: 1fr;
+    padding-top: 60px;
+    row-gap: 23px;
+  }
+
+  .about-me__frame {
+    grid-row: aside-start / 1;
+    max-width: 290px;
+    max-height: 350px;
+    border-radius: 10px;
+  }
+
+  .student {
+    padding-top: 0;
+  }
+
+  .about-me__photo {
+    border-radius: 10px;
+    object-fit: contain;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+  }
+
+  .about-me__link {
+    margin-top: 40px;
+  }
+
+  .about-me__line {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 330px) {
+  .about-me__line {
+    width: 91%;
+  }
+}

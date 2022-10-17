@@ -1,0 +1,53 @@
+.page__section {
+  margin-left: 70px;
+  color: #FFFFFF;
+}
+
+.page__section-movies {
+  margin-left: 70px;
+  color: #FFFFFF;
+  padding-right: 70px;
+}
+
+.page__section-authorization {
+  padding-left: 68px;
+}
+
+.opacity-link {
+  opacity: 1;
+  transition: opacity .2s linear;
+}
+
+.opacity-link:hover {
+  opacity: .6;
+}
+
+@media screen and (max-width: 769px) {
+  .page__section {
+    margin-left: 50px;
+  }
+
+  .page__section-movies {
+    margin-left: 30px;
+    padding-right: 30px;
+  }
+
+  .page__section-authorization {
+    padding-left: 28px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .page__section {
+    margin-left: 16px;
+  }
+
+  .page__section-movies {
+    margin-left: 10px;
+    padding-right: 10px;
+  }
+
+  .page__section-authorization {
+    padding-left: 13px;
+  }
+}

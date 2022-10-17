@@ -1,0 +1,25 @@
+.header {
+  display: flex;
+  width: 100vw;
+  padding-top: 18px;
+  background-color: #073042;
+  }
+
+.header__movies {
+  display: flex;
+  width: 100vw;
+  padding-top: 18px;
+  background-color: #202020;
+}
+
+  @media screen and (max-width: 769px){
+    .header {
+      padding-bottom: 21px;
+    }
+  }
+
+  @media screen and (max-width: 321px){
+    .header {
+      padding-bottom: 0;
+    }
+  }
