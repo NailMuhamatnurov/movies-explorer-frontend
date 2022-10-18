@@ -24,11 +24,11 @@ function Navigation({user}) {
                              onClick={toggleMenu}>
                         Главная
                     </NavLink>
-                    <NavLink to='/movies' activeClassName='navigation__movies_active navigation__movies_section' className='navigation__movies opacity-link'
+                    <NavLink to='/movies' activeClassName='navigation__movies_active' className='navigation__movies navigation__movies_section opacity-link'
                              onClick={toggleMenu}>
                         Фильмы
                     </NavLink>
-                    <NavLink to='/saved-movies' activeClassName='navigation__movies_active'
+                    <NavLink to='/saved-movies' activeClassName='navigation__movies_active ' 
                              className='navigation__movies opacity-link'
                              onClick={toggleMenu}>
                         Сохраненные фильмы

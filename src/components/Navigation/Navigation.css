@@ -96,6 +96,7 @@
 
 .navigation__link_type_signin {
   background-color: #2BE080;
+  color: #000000;
   margin: 0;
 }
 
@@ -211,9 +212,15 @@
   }
 }
 
+@media screen and (max-width: 759px) {
+  .navigation__movies_section {
+    margin-right: 170px;
+  }
+}
+
 @media screen and (max-width: 700px) {
   .navigation__movies_section {
-    margin-right: calc(100vw/4.1);
+    margin-right: calc(100vw/4.19);
   }
 }
 
