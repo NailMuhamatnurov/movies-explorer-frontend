@@ -2,17 +2,20 @@ import './Login.css';
 import AuthorizationForm from "../AuthorizationForm/AuthorizationForm";
 import React from 'react';
 
-function Login(){
+function Login({ onLogin, infoMessage }) {
 
   return (
     <AuthorizationForm
+      type='signin'
       title='Рады видеть!'
-      actionName='Войти'
-      helpAction='signup'
-      helpActionName='Регистрация'
-      helpText='Ещё не зарегистрированы?'
+      linkName='Регистрация'
+      linkTo='signup'
+      buttonName='Войти'
+      subtitle='Ещё не зарегистрированы?'
+      onSubmit={onLogin}
+      infoMessage={infoMessage}
     />
-  )
-}
- 
+  );
+};
+
 export default Login;

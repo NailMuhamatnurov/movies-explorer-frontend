@@ -1,47 +1,57 @@
 import './Navigation.css';
-import {Link, NavLink} from 'react-router-dom';
-import React, {useState} from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { useState } from 'react';
 
-function Navigation({user}) {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const toggleMenu = () => {
-        setIsMenuOpen(isOpen => !isOpen);
-    }
 
+function Navigation({ loggedIn }) {
+
+    const [isClicked, setIsClicked] = useState(false);
+  
+    function handleMenuClose() {
+      setIsClicked(false)
+    };
+
+    function handleMenuOpen() {
+        setIsClicked(true)
+    };
+  
+ 
     return (
-        <nav className={`navigation ${isMenuOpen ? 'navigation_open' : ''}`}>
-            {!user ? <>
+        <nav className={`navigation ${isClicked ? 'navigation_open' : ''}`}>
+            {!loggedIn ? (
+        <>
                 <Link to='/signup' className='navigation__link opacity-link'>Регистрация</Link>
                 <Link to='/signin' className='navigation__link navigation__link_type_signin opacity-link'>Войти</Link>
-            </> : <>
+            </> ):( <>
                 <button
-                    className={`navigation__button opacity-link ${isMenuOpen ? 'navigation__button_type_close' : 'navigation__button_type_burger'} `}
-                    onClick={toggleMenu}>
+                    className={`navigation__button opacity-link  ${isClicked ? 'navigation__button_type_close' : 'navigation__button_type_burger'} `}
+                    onClick={isClicked ? handleMenuClose : handleMenuOpen}>
                 </button>
 
-                <div className={`navigation__box ${isMenuOpen ? 'navigation__box_open' : ''}`}>
+                <div className={`navigation__box ${isClicked ? 'navigation__box_open' : ''}`}>
                     <NavLink exact to='/' activeClassName='navigation__movies_active' className='navigation__movies opacity-link'
-                             onClick={toggleMenu}>
+                             onClick={handleMenuClose}>
                         Главная
                     </NavLink>
                     <NavLink to='/movies' activeClassName='navigation__movies_active' className='navigation__movies navigation__movies_section opacity-link'
-                             onClick={toggleMenu}>
+                             onClick={handleMenuClose}>
                         Фильмы
                     </NavLink>
                     <NavLink to='/saved-movies' activeClassName='navigation__movies_active ' 
                              className='navigation__movies opacity-link'
-                             onClick={toggleMenu}>
+                             onClick={handleMenuClose}>
                         Сохраненные фильмы
                     </NavLink>
                     <Link to='/profile' className='navigation__link navigation__link_type_profile opacity-link'
-                          onClick={toggleMenu}>
+                          onClick={handleMenuClose}>
                         Аккаунт
                         <div className='navigation__link_type_profile-icon'>
                             <div className='accaunt-icon'></div>
                         </div>
                     </Link>
                 </div>
-            </>}
+            </>
+            )}
         </nav>
     );
 }
