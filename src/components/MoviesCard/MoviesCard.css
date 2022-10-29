@@ -1,0 +1,103 @@
+.movie {
+  max-height: 281px;
+  overflow: hidden;
+  width: 100%;
+  background-color: #202020;
+  color: #FFFFFF;
+}
+
+.movie__info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.movie__pic{
+  display: block;
+  height: auto;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.movie__frame {
+  display: flex;
+  flex-direction: column;
+  padding-top: 12px;
+}
+
+
+.movie__title {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-top: 2px;
+}
+
+.movie__line {
+  border-bottom: solid 1px #424242;
+  width: 100%;
+  padding-top: 27px;
+}
+
+.movie__time {
+  font-size: 11px;
+  line-height: 13px;
+  font-weight: 400;
+  margin: 0;
+  color: #A0A0A0;
+  padding-top: 7px;
+}
+
+.movie__save-button {
+  background-image: url('../../images/dislike.svg');
+  text-align: center;
+  background-size: 10px 10px;
+  align-items: center;
+}
+
+.movie__save-button_active {
+  background-image: url('../../images/like.svg');
+}
+
+.movie__button {
+  background-color: #313131;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin-right: 2px;
+  padding-top: 0;
+  cursor: pointer;
+}
+
+.movie__delete-button {
+  background-size: 23px;
+  background-image: url('../../images/cross-button.svg');
+}
+
+@media screen and (max-width: 670px){
+  .movie{
+    max-height: 410px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 420px){
+  .movie{
+    width: 100%;
+    max-height: 281px;
+  }
+
+  .movie__title {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

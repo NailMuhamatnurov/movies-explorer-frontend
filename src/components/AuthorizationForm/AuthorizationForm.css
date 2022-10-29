@@ -1,0 +1,138 @@
+.authorization-form {
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  padding-top: 70px;
+  padding-bottom: 70px;
+  justify-content: center;
+  width: 532px;
+}
+
+.authorization-form__form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 396px;
+}
+
+.authorization-form__title {
+  font-size: 24px;
+  line-height: 29px; 
+  font-weight: 500;
+  margin-top: 39px;
+  margin-bottom: 37px;
+  margin-left: 0;  
+  width: 396px;
+}
+
+.authorization-form__subtitle {
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
+  color: #8B8B8B;
+  text-align: center;
+}
+
+.authorization-form__label {
+  position: relative;
+  font-size: 10px;
+  line-height: 12px;
+  font-weight: 400;
+  color: #8B8B8B;
+  margin-bottom: 24px;
+}
+
+.authorization-form__label:last-of-type {
+  margin-bottom: 223px;
+}
+
+.authorization-form__input {
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 500;
+  color: #FFFFFF;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid  #424242;
+}
+
+.authorization-form__input:focus {
+  outline: none;
+}
+
+.authorization-form__input:invalid {
+  color: #EE3465;
+}
+
+.authorization-form__submit-button {
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 500;
+  min-height: 45px;
+  color:#fff;
+  background-color: #4285F4;
+  border: none;
+  border-radius: 4px;
+  margin-top: auto;
+}
+
+.authorization-form__link {
+  color: #4285F4;
+  text-decoration: none;
+  margin-left: 6px;
+}
+
+.authorization-form__error {
+  font-size: 10px;
+  line-height: 12px;
+  font-weight: 400;
+  color: #EE3465;
+}
+
+@media screen and (max-width: 769px) {
+  .authorization-form {
+    width: 458px;
+    margin-top: 161px;
+  }
+  .authorization-form__submit-button {
+    margin-top: 0px;
+  }
+
+  .authorization-form__login-button {
+    margin-top: 139px;
+  }
+}
+
+@media screen and (max-width: 670px) {
+  .authorization-form{
+    width: 340px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .authorization-form {
+    align-items: center;
+    margin-top: 0;
+    padding-top: 55px;
+    width: 100px;
+    margin-right: 12px;
+  }
+
+  .authorization-form__form{
+    width: 260px;
+    padding-top: 42px;
+  }
+
+  .authorization-form__subtitle{
+    font-size: 12px;
+    line-height: 15px;
+  }
+  
+  .authorization-form__title {
+    text-align: center;
+    padding-top: 10px;
+  }
+}
