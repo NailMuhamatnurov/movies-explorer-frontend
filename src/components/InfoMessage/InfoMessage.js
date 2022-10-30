@@ -3,7 +3,7 @@ import React from 'react';
 
 function InfoMessage({ isShown, message, code, type }) {
 
-    const SUCCESSFUL_CODE = 200;
+    const OK_CODE = 200;
     const ERROR_CODE = 400;
 
     const [textMessage, setTextMessage] = React.useState('');
@@ -20,7 +20,7 @@ function InfoMessage({ isShown, message, code, type }) {
 
     React.useEffect(() => {
         switch (code) {
-            case SUCCESSFUL_CODE:
+            case OK_CODE:
                 setTextMessage('Ок');
                 break;
             case ERROR_CODE:
@@ -34,7 +34,7 @@ function InfoMessage({ isShown, message, code, type }) {
     return (
         <div className='message'>
             {isShown && (
-                <p className={`message__box ${code === SUCCESSFUL_CODE && 'message__box_type_ok'}`}>
+                <p className={`message__box ${code === OK_CODE && 'message__box_type_ok'}`}>
                     {textMessage}
                 </p>
             )}

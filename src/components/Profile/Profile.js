@@ -1,7 +1,7 @@
 import React from 'react';
 import './Profile.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { useFormValidation } from '../../hooks/useFormValidation';
+import { useFormValidation } from '../../HOCs/useFormValidation';
 import InfoMessage from '../InfoMessage/InfoMessage';
 
 

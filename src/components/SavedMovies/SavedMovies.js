@@ -1,7 +1,6 @@
 import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import Movies from '../Movies/Movies';
 import React from 'react';
 
 
@@ -13,7 +12,7 @@ function SavedMovies({ list, onDeleteClick, isError }) {
     const [shortFilms, setShortFilms] = React.useState('off');
 
     React.useEffect(() => {
-        const arr = Movies.filteredMovies(list, searchQuery, shortFilms);
+        const arr = filterMovies(list, searchQuery, shortFilms);
         setFilteredMovies(arr);
         if (searchQuery) {
             arr.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
@@ -22,28 +21,47 @@ function SavedMovies({ list, onDeleteClick, isError }) {
 
     function handleSearchSubmit(value) {
         setSearchQuery(value);
-        const resultList = Movies.sortMovies(list, searchQuery, shortFilms);
+        const resultList = filterMovies(list, searchQuery, shortFilms);
         setFilteredMovies(resultList);
     };
 
     function handleShortFilms(e) {
         setShortFilms(e.target.value);
     };
+    
+    function filterMovies(movies, searchQuery, shortFilms) {
+        const moviesByQuery =  movies.filter((item) => {
+          const strRu = String(item.nameRU).toLowerCase();
+          const strEn = String(item.nameEN).toLowerCase();
+          const searchStr = searchQuery.toLowerCase().trim();
+          return (strRu.indexOf(searchStr) !== -1 || strEn.indexOf(searchStr) !== -1);
+        });
+      
+        if(shortFilms === 'on'){
+          return filterShortMovies(moviesByQuery);
+        }
+        return moviesByQuery;
+      };
+
+      
+    function filterShortMovies(movies){
+        return movies.filter((item) => item.duration < 40);
+    };
 
     return (
         <section className='saved-movies'>
             <SearchForm
-                onSearchClick={handleSearchSubmit}
-                onCheckbox={handleShortFilms}
                 shortFilms={shortFilms}
+                onSearchClick={handleSearchSubmit}
                 savedMoviesPage={true}
+                onCheckbox={handleShortFilms}
             />
             <MoviesCardList
                 list={filteredMovies}
-                savedMoviesPage={true}
-                onDelete={onDeleteClick}
-                isEmptyList={isNotFound}
                 isError={isError}
+                onDelete={onDeleteClick}
+                savedMoviesPage={true}
+                isEmptyList={isNotFound}
             />
         </section>
     );

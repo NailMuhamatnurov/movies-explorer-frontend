@@ -1,9 +1,9 @@
-const BASE_URL = 'https://api.nailm.movies.students.nomoredomains.icu';
+const apiURL = 'https://api.nailm.movies.students.nomoredomains.icu';
 
 class MainApi {
     constructor({
         baseUrl,
-        headers
+        headers,
     }) {
         this._baseUrl = baseUrl;
         this._userUrl = `${this._baseUrl}/users/me`;
@@ -40,10 +40,11 @@ class MainApi {
         return fetch(this._userUrl, {
             headers: {
                 authorization: this._token,
-              },
+            },
             credentials: 'include',
         })
             .then(res => {
+                console.log('ЗИС ТОКЕН ТАКОЙ ВОТ ' + this._token);
                 return this.handleResponse(res);
             })
     };
@@ -138,7 +139,6 @@ class MainApi {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-               
             },
             body: JSON.stringify({
                 email,
@@ -150,14 +150,14 @@ class MainApi {
             })
     };
 
-    signout() {
+    signout(token) {
         return fetch(`${this._baseUrl}/signout`, {
             method: 'POST',
             credentials: 'include',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                authorization: this._token,
+                'Authorization': `Bearer ${token}`,
             }
         })
             .then(res => {
@@ -167,7 +167,7 @@ class MainApi {
 };
 
 const mainApi = new MainApi({
-    baseUrl: BASE_URL,
+    baseUrl: apiURL,
     headers: {
         'Content-Type': 'application/json',
     },

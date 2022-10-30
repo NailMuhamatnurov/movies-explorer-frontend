@@ -100,7 +100,8 @@
   background-color: #fff;
   height: 18px;
   width: 19px;
-  right: 25px;
+  right: 15px;
+  left: -8px;
   z-index: 2;
 }
 
@@ -114,10 +115,26 @@
 
 .search-form__filter .search-form__radio:checked {
   z-index: 1;
+  margin-left: -5px;
+
 }
 
-.search-form__checkbox:not(:checked) ~.search-form__switch {
+.search-form__checkbox:checked ~ .search-form__switch {
   left: -8px;
+}
+
+.search-form__checkbox ~ :checked ~ .search-form__switch {
+  left: 3px;
+}
+
+.search-form__error {
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 400;
+  color: red;
+  position: absolute;
+  top: 173px;
+  left: 250px;
 }
 
 @media screen and (max-width: 1270px) {
@@ -125,6 +142,10 @@
     width: 84%;
     padding-top: 75px;
     padding-bottom: 29px;
+  }
+
+  .search-form__error {
+    top: 153px;
   }
 }
 
@@ -142,6 +163,10 @@
     margin-left: 33px;
     max-width: 92%;
   }
+
+  .search-form__error {
+    top: 169px;
+  }
 }  
 
 @media screen and (max-width: 750px) {
@@ -151,6 +176,10 @@
   .search-form__line {
     max-width: 85%;
   }
+  .search-form__error {
+    top: 171px;
+    left: 130px;
+  }
 }  
 
 @media screen and (max-width: 400px) {
@@ -159,6 +188,11 @@
   }
   .search-form__line {
     max-width: 85%;
+  }
+  .search-form__error {
+    font-size: 10px;
+    top: 168px;
+    left: 80px;
   }
 }
 

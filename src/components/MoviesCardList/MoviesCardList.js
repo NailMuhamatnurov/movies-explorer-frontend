@@ -2,7 +2,7 @@ import './MoviesCardList.css';
 import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
-import { useWindowWidth } from '../../hooks/useWindowWidth';
+import { useWindowWidth } from '../../HOCs/useWindowWidth';
 
 function MoviesCardList({ isLoading, list, isEmptyList, onDelete, isError, savedMoviesPage, onLike, savedMovies, }) {
 

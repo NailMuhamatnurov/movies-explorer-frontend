@@ -2,7 +2,7 @@ import './AuthorizationForm.css';
 import { Link } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import React from 'react';
-import { useFormValidation } from '../../hooks/useFormValidation';
+import { useFormValidation } from '../../HOCs/useFormValidation';
 import InfoMessage from '../InfoMessage/InfoMessage';
 
 function AuthorizationForm({type, buttonName, linkName, linkTo, title, subtitle, onSubmit, infoMessage}) {
