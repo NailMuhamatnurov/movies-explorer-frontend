@@ -44,7 +44,6 @@ class MainApi {
             credentials: 'include',
         })
             .then(res => {
-                console.log('ЗИС ТОКЕН ТАКОЙ ВОТ ' + this._token);
                 return this.handleResponse(res);
             })
     };
@@ -82,15 +81,15 @@ class MainApi {
             },
             credentials: 'include',
             body: JSON.stringify({
-                country: country,
+                country,
                 director,
                 duration,
                 year,
                 description,
                 image,
-                trailer: trailerLink,
-                nameRU: nameRU,
-                nameEN: nameEN,
+                trailerLink,
+                nameRU,
+                nameEN,
                 thumbnail,
                 movieId: id,
             })

@@ -1,7 +1,7 @@
-import './InfoMessage.css';
+import './TextMessage.css';
 import React from 'react';
 
-function InfoMessage({ isShown, message, code, type }) {
+function TextMessage({ isShown, message, code, type }) {
 
     const OK_CODE = 200;
     const ERROR_CODE = 400;
@@ -42,4 +42,4 @@ function InfoMessage({ isShown, message, code, type }) {
     );
 };
 
-export default InfoMessage;
+export default TextMessage;

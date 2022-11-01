@@ -7,8 +7,6 @@ function SearchForm({ onSearchClick, savedMoviesPage, shortFilms, onCheckbox }) 
 
   const {values, errors, isValid, setValues, handleChange, setIsValid} = useFormValidation();
   
-  const [short, setShort] = React.useState(false);
-
   React.useEffect(() => {
     if (!savedMoviesPage) {
       const input = localStorage.getItem('searchQuery');

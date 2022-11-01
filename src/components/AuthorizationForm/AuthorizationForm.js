@@ -1,11 +1,11 @@
 import './AuthorizationForm.css';
-import { Link } from 'react-router-dom';
-import Logo from '../Logo/Logo';
 import React from 'react';
+import Logo from '../Logo/Logo';
+import { Link } from 'react-router-dom';
 import { useFormValidation } from '../../HOCs/useFormValidation';
-import InfoMessage from '../InfoMessage/InfoMessage';
+import TextMessage from '../TextMessage/TextMessage';
 
-function AuthorizationForm({type, buttonName, linkName, linkTo, title, subtitle, onSubmit, infoMessage}) {
+function AuthorizationForm({type, buttonName, linkName, linkTo, title, subtitle, onSubmit, textMessage}) {
 
     const {values, errors, isValid, handleChange} = useFormValidation();
 
@@ -31,8 +31,8 @@ function AuthorizationForm({type, buttonName, linkName, linkTo, title, subtitle,
                         minLength='2'
                         maxLength='30'
                         value={values.name}
-                        onChange={handleChange}
                         required
+                        onChange={handleChange}
                     />
                     <span id='name-error' className='authorization-form__error'>{errors.name ? `Поле должно быть заполнено` : ''}</span>
                 </label>
@@ -46,11 +46,11 @@ function AuthorizationForm({type, buttonName, linkName, linkTo, title, subtitle,
                         type='email'
                         minLength='2'
                         maxLength='30'
-                        value={values.email || ''}
                         onChange={handleChange}
+                        value={values.email}
                         required
                     />
-                    <span id='email-error' className='authorization-form__error'>{errors.email || ''}</span>
+                    <span id='email-error' className='authorization-form__error'>{errors.email}</span>
                     
                 </label>
                 <label className='authorization-form__label'>Пароль
@@ -61,15 +61,15 @@ function AuthorizationForm({type, buttonName, linkName, linkTo, title, subtitle,
                         type='password'
                         minLength='4'
                         maxLength='20'
-                        value={values.password || ''}
                         onChange={handleChange}
+                        value={values.password}
                         required
                     />
-                    <span id='password-error' className='authorization-form__error'>{errors.password || ''}</span>
+                    <span id='password-error' className='authorization-form__error'>{errors.password}</span>
                     
                 </label>
 
-                <InfoMessage {...infoMessage} />
+                <TextMessage {...textMessage} />
 
                 <button className={'authorization-form__submit-button opacity-link'} type='submit' disabled={!isValid}>{buttonName}</button> 
                 

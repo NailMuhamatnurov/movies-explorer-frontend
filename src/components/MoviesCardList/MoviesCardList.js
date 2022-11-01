@@ -23,19 +23,14 @@ function MoviesCardList({ isLoading, list, isEmptyList, onDelete, isError, saved
     const residual = list.length - start;
 
     if (residual > 0) {
-      const newCards = list.slice(start, end);
+      const newCards = list.slice(start - 1, end);
       setShowList([...showList, ...newCards]);
     }
   };
 
   function getSavedMoviesPage() {
     return list.map((item) => (
-      <MoviesCard
-        key={item._id}
-        card={item}
-        savedPage={savedMoviesPage}
-        onDelete={onDelete}
-      />
+      <MoviesCard key={item._id} savedPage={savedMoviesPage} onDelete={onDelete} card={item}/>
     ))
   };
 
@@ -63,10 +58,11 @@ function MoviesCardList({ isLoading, list, isEmptyList, onDelete, isError, saved
     return showList.map((item) => {
       const likedMovieCard = getSavedMovieCard(savedMovies, item.id);
       const likedMovieId = likedMovieCard ? likedMovieCard._id : null;
+      
     return (
         <MoviesCard
           key={item.id}
-          liked={likedMovieCard ? true : false}
+          liked={!likedMovieCard ? false : true}
           card={{ ...item, _id: likedMovieId }}
           onDelete={onDelete}
           onLike={onLike}
@@ -86,7 +82,7 @@ function MoviesCardList({ isLoading, list, isEmptyList, onDelete, isError, saved
         ) : (
           <>
             <div className='movies-list__box'>
-              {savedMoviesPage ? getSavedMoviesPage() : getInitialMoviesPage()}
+              {!savedMoviesPage ? getInitialMoviesPage() : getSavedMoviesPage()}
             </div>
             <button className={`movies-list__more-button opacity-link ${(showList.length === list.length || savedMoviesPage || isEmptyList) &&
               'movies-list__more-button_hidden'}`} type='button' onClick={handleClickMoreMovies} aria-label='Показать еще'>Ещё

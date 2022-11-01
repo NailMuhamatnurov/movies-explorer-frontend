@@ -2,7 +2,7 @@ import './Register.css';
 import AuthorizationForm from '../AuthorizationForm/AuthorizationForm';
 import React from 'react';
 
-function Register({ onRegister, infoMessage }){
+function Register({ onRegister, textMessage }){
 
   return (
     <AuthorizationForm
@@ -13,7 +13,7 @@ function Register({ onRegister, infoMessage }){
     subtitle='Уже зарегестрированы?'
     linkName='Войти'
     onSubmit={onRegister}
-    infoMessage={infoMessage}
+    textMessage={textMessage}
     >
     </AuthorizationForm>
   )

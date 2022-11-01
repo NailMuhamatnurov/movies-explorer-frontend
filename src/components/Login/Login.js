@@ -2,7 +2,7 @@ import './Login.css';
 import AuthorizationForm from "../AuthorizationForm/AuthorizationForm";
 import React from 'react';
 
-function Login({ onLogin, infoMessage }) {
+function Login({ onLogin, textMessage }) {
 
   return (
     <AuthorizationForm
@@ -13,7 +13,7 @@ function Login({ onLogin, infoMessage }) {
       buttonName='Войти'
       subtitle='Ещё не зарегистрированы?'
       onSubmit={onLogin}
-      infoMessage={infoMessage}
+      textMessage={textMessage}
     />
   );
 };

@@ -19,15 +19,15 @@ function App() {
     const history = useHistory();
     const OK_CODE = 200;
     const [currentUser, setCurrentUser] = React.useState({});
-    const [savedMovies, setSavedMovies] = React.useState([]);
     const [loggedIn, setLoggedIn] = React.useState(false);
-    const [infoMessage, setInfoMessage] = React.useState({ isShown: false, message: '', code: OK_CODE });
-    const [isLoaging, setIsLoaging] = React.useState(true);
     const [isError, setIsError] = React.useState(false);
-
-    function handleClickResetInfoMessage() {
-        if (infoMessage.isShown) {
-            setInfoMessage({ ...infoMessage, isShown: false, message: '', type: '', code: OK_CODE });
+    const [savedMovies, setSavedMovies] = React.useState([]);
+    const [textMessage, setTextMessage] = React.useState({ isShown: false, message: '', code: OK_CODE });
+    const [isLoaging, setIsLoaging] = React.useState(true);
+    
+    function handleResetTextMessage() {
+        if (textMessage.isShown) {
+            setTextMessage({ ...textMessage, isShown: false, message: '', type: '', code: OK_CODE });
         }
     };
 
@@ -40,8 +40,8 @@ function App() {
                 history.push('/movies');
             })
             .catch(({ message, statusCode }) => {
-                setInfoMessage({
-                    ...infoMessage,
+                setTextMessage({
+                    ...textMessage,
                     isShown: true,
                     message,
                     code: statusCode,
@@ -50,6 +50,66 @@ function App() {
             })
             .finally(() => setIsLoaging(false))
     };
+
+    function handleUpdateProfile(name, email) {
+        mainApi.updateUserProfile(name, email)
+            .then(data => {
+                setCurrentUser(data);
+                setTextMessage({
+                    ...textMessage,
+                    isShown: true,
+                    type: 'profile',
+                });
+            })
+            .catch(({ message, statusCode }) => {
+                setTextMessage({
+                    ...textMessage,
+                    isShown: true,
+                    message,
+                    code: statusCode,
+                    type: 'profile',
+                });
+            })
+    };
+
+    function handleSignup(name, email, password) {
+        mainApi.signup(name, email, password)
+            .then(res => {
+                if (res) {
+                    handleSignin(email, password);
+                }
+            })
+            .catch(({ message, statusCode }) => {
+                setTextMessage({
+                    ...textMessage,
+                    isShown: true,
+                    message,
+                    code: statusCode,
+                    type: 'signup',
+                });
+            })
+    };
+
+    function handleDeleteMovie(movie) {
+        mainApi.deleteMovie(movie._id)
+            .then(() => {
+                const newMoviesList = savedMovies.filter((m) => m._id === movie._id ? false : true);
+                setSavedMovies(newMoviesList);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    function handleSaveMovie(movie) {
+        mainApi.saveNewMovie(movie)
+            .then(newCard => {
+                setSavedMovies([newCard, ...savedMovies]);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
     function handleSignOut() {
         mainApi.signout()
@@ -63,63 +123,6 @@ function App() {
                 console.log(err);
             })
     };
-
-    function handleUpdateUser(name, email) {
-        mainApi.updateUserProfile(name, email)
-            .then(data => {
-                setCurrentUser(data);
-                setInfoMessage({
-                    ...infoMessage,
-                    isShown: true,
-                    type: 'profile',
-                });
-            })
-            .catch(({ message, statusCode }) => {
-                setInfoMessage({
-                    ...infoMessage,
-                    isShown: true,
-                    message,
-                    code: statusCode,
-                    type: 'profile',
-                });
-            })
-    };
-
-    function handleSignup(name, email, password) {
-        mainApi.signup(name, email, password)
-            .then(data => {
-                if (data) {
-                    console.log(data);
-                    handleSignin(data.email, password);
-                }
-            })
-            .catch(({ message, statusCode }) => {
-                setInfoMessage({
-                    ...infoMessage,
-                    isShown: true,
-                    message,
-                    code: statusCode,
-                    type: 'register',
-                });
-            })
-    };
-
-    function handleDeleteMovie(movie) {
-        mainApi.deleteMovie(movie._id)
-            .then(() => {
-                const newMoviesList = savedMovies.filter((m) => m._id === movie._id ? false : true);
-                setSavedMovies(newMoviesList);
-            })
-            .catch(err => console.log(err))
-    }
-
-    function handleSaveMovie(movie) {
-        mainApi.saveNewMovie(movie)
-            .then(newCard => {
-                setSavedMovies([newCard, ...savedMovies]);
-            })
-            .catch(err => console.log(err))
-    }
     
     React.useEffect(() => {
         setIsLoaging(true);
@@ -133,7 +136,6 @@ function App() {
             })
             .finally(() => setIsLoaging(false))
     }, [loggedIn]);
-
     
     React.useEffect(() => {
         if (loggedIn) {
@@ -152,7 +154,7 @@ function App() {
     return (
         <CurrentUserContext.Provider value={currentUser}>
 
-            <div className='app' onClick={infoMessage.isShown ? handleClickResetInfoMessage : null}>
+            <div className='app' onClick={textMessage.isShown ? handleResetTextMessage : null}>
                 {isLoaging ? (
                     <Preloader />
                 ) : (
@@ -162,17 +164,17 @@ function App() {
                         <Switch>
                             <ProtectedRoute
                                 exact path='/movies'
-                                loggedIn={loggedIn}
                                 component={Movies}
-                                savedMoviesList={savedMovies}
+                                loggedIn={loggedIn}
                                 onLikeClick={handleSaveMovie}
                                 onDeleteClick={handleDeleteMovie}
+                                savedMoviesList={savedMovies}
                             />
 
                             <ProtectedRoute
                                 exact path='/saved-movies'
-                                loggedIn={loggedIn}
                                 component={SavedMovies}
+                                loggedIn={loggedIn}
                                 list={savedMovies}
                                 onDeleteClick={handleDeleteMovie}
                                 isError={isError}
@@ -180,11 +182,11 @@ function App() {
 
                             <ProtectedRoute
                                 exact path='/profile'
-                                loggedIn={loggedIn}
                                 component={Profile}
+                                loggedIn={loggedIn}
+                                textMessage={textMessage}
                                 onSignOut={handleSignOut}
-                                onUpdate={handleUpdateUser}
-                                infoMessage={infoMessage}
+                                onUpdate={handleUpdateProfile}
                             />
 
                             <Route path='/' exact>
@@ -192,11 +194,11 @@ function App() {
                             </Route>
 
                             <Route path='/signup'>
-                                {loggedIn ? <Redirect to='/movies' /> : <Register onRegister={handleSignup} infoMessage={infoMessage} />}
+                                {loggedIn ? <Redirect to='/movies' /> : <Register textMessage={textMessage} onRegister={handleSignup}/>}
                             </Route>
 
                             <Route path='/signin'>
-                                {loggedIn ? <Redirect to='/movies' /> : <Login onLogin={handleSignin} infoMessage={infoMessage} />}
+                                {loggedIn ? <Redirect to='/movies' /> : <Login textMessage={textMessage} onLogin={handleSignin}/>}
                             </Route>
 
                             <Route path="*">
