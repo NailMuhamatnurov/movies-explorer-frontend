@@ -6,6 +6,11 @@ import { useFormValidation } from '../../HOCs/useFormValidation';
 function SearchForm({ onSearchClick, savedMoviesPage, shortFilms, onCheckbox }) {
 
   const {values, errors, isValid, setValues, handleChange, setIsValid} = useFormValidation();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    onSearchClick(values.query);
+  };
   
   React.useEffect(() => {
     if (!savedMoviesPage) {
@@ -16,11 +21,6 @@ function SearchForm({ onSearchClick, savedMoviesPage, shortFilms, onCheckbox }) 
       }
     }
   }, [savedMoviesPage, setValues, setIsValid]);
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    onSearchClick(values.query);
-  };
 
   return (
     <div className='search-form'>
