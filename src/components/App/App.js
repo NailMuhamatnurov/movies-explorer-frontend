@@ -25,6 +25,33 @@ function App() {
     const [textMessage, setTextMessage] = React.useState({ isShown: false, message: '', code: OK_CODE });
     const [isLoaging, setIsLoaging] = React.useState(true);
     
+    React.useEffect(() => {
+        setIsLoaging(true);
+        mainApi.getUserData()
+            .then(res => {
+                setCurrentUser(res);
+                setLoggedIn(true);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+            .finally(() => setIsLoaging(false))
+    }, [loggedIn]);
+    
+    React.useEffect(() => {
+        if (loggedIn) {
+            mainApi.getUsersMovies()
+                .then((res) => {
+                    setSavedMovies(res);
+                    setIsError(false);
+                })
+                .catch(err => {
+                    setIsError(true);
+                    console.log(err);
+                })
+        }
+    }, [loggedIn]);
+
     function handleResetTextMessage() {
         if (textMessage.isShown) {
             setTextMessage({ ...textMessage, isShown: false, message: '', type: '', code: OK_CODE });
@@ -102,9 +129,9 @@ function App() {
     }
 
     function handleSaveMovie(movie) {
-        mainApi.saveNewMovie(movie)
-            .then(newCard => {
-                setSavedMovies([newCard, ...savedMovies]);
+        mainApi.likeMovie(movie)
+            .then(likedCard => {
+                setSavedMovies([likedCard, ...savedMovies]);
             })
             .catch(err => {
                 console.log(err);
@@ -124,33 +151,6 @@ function App() {
             })
     };
     
-    React.useEffect(() => {
-        setIsLoaging(true);
-        mainApi.getUserData()
-            .then(res => {
-                setCurrentUser(res);
-                setLoggedIn(true);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-            .finally(() => setIsLoaging(false))
-    }, [loggedIn]);
-    
-    React.useEffect(() => {
-        if (loggedIn) {
-            mainApi.getUsersMovies()
-                .then((res) => {
-                    setSavedMovies(res);
-                    setIsError(false);
-                })
-                .catch(err => {
-                    setIsError(true);
-                    console.log(err);
-                })
-        }
-    }, [loggedIn]);
-
     return (
         <CurrentUserContext.Provider value={currentUser}>
 

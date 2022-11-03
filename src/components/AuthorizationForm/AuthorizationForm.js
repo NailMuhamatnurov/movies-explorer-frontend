@@ -30,7 +30,7 @@ function AuthorizationForm({type, buttonName, linkName, linkTo, title, subtitle,
                         type='text'
                         minLength='2'
                         maxLength='30'
-                        value={values.name}
+                        value={values.name || ''}
                         required
                         onChange={handleChange}
                     />
@@ -47,10 +47,10 @@ function AuthorizationForm({type, buttonName, linkName, linkTo, title, subtitle,
                         minLength='2'
                         maxLength='30'
                         onChange={handleChange}
-                        value={values.email}
+                        value={values.email || ''}
                         required
                     />
-                    <span id='email-error' className='authorization-form__error'>{errors.email}</span>
+                    <span id='email-error' className='authorization-form__error'>{errors.email || ''}</span>
                     
                 </label>
                 <label className='authorization-form__label'>Пароль
@@ -62,7 +62,7 @@ function AuthorizationForm({type, buttonName, linkName, linkTo, title, subtitle,
                         minLength='4'
                         maxLength='20'
                         onChange={handleChange}
-                        value={values.password}
+                        value={values.password || ''}
                         required
                     />
                     <span id='password-error' className='authorization-form__error'>{errors.password}</span>

@@ -60,19 +60,7 @@ class MainApi {
             })
     };
 
-    saveNewMovie({
-        country,
-        director,
-        duration,
-        year,
-        description,
-        image,
-        trailerLink,
-        nameRU,
-        nameEN,
-        thumbnail,
-        id,
-    }) {
+    likeMovie({ country, director, duration, year, description, image, trailerLink, nameRU, nameEN, thumbnail, id }) {
         return fetch(this._moviesUrl, {
             method: 'POST',
             headers: {

@@ -1,13 +1,13 @@
 import React from 'react';
 
 export function useWindowWidth() {
-  const getWindowWidth = React.useCallback(() => window.innerWidth, []);
-  const [windowWidth, setWindowWidth] = React.useState(getWindowWidth());
+  const getWindowSize = React.useCallback(() => window.innerWidth, []);
+  const [windowSize, setWindowSize] = React.useState(getWindowSize());
 
   React.useEffect(() => {
 
     function handleResize() {
-      setWindowWidth(getWindowWidth());
+      setWindowSize(getWindowSize());
     };
 
     window.addEventListener('resize', resizeThrottler, false);
@@ -23,7 +23,7 @@ export function useWindowWidth() {
     };
     
     return () => window.removeEventListener('resize', handleResize);
-  }, [getWindowWidth]);
+  }, [getWindowSize]);
 
-  return windowWidth;
+  return windowSize;
 };

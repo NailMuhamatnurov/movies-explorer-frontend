@@ -10,29 +10,29 @@ function Movies({ onLikeClick, savedMoviesList, onDeleteClick }) {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [isError, setIsError] = React.useState(false);
   const [shortFilms, setShortFilms] = React.useState(forCheckbox);
-  const [isNothingFound, setIsNothingFound] = React.useState(false);
+  const [isNotFound, setIsNotFound] = React.useState(false);
   const [filteredMovies, setFilteredMovies] = React.useState([]);
-  const [allMovies, setAllMovies] = React.useState([]);
+  const [fullMovieList, setFullMovieList] = React.useState([]);
   
   function filterShortMovies(movies){
     return movies.filter((item) => item.duration < 40);
   };
    
   function handleCheckFilteredMovies(arr) {
-    arr.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
+    arr.length === 0 ? setIsNotFound(true) : setIsNotFound(false);
 	}
 
   function handleSearchSubmit(value) {
     setIsMoviesLoaging(true);
     setSearchQuery(value);
-    localStorage.setItem('shortFilms', shortFilms);
     localStorage.setItem('searchQuery', value);
-      
-    if (!allMovies.length) {
+    localStorage.setItem('shortFilms', shortFilms);
+          
+    if (!fullMovieList.length) {
       moviesApi.getMovies()
         .then((res) => {
-          setAllMovies(res);
-          changeMovies(res);
+          setFullMovieList(res);
+          relinkImages(res);
           handleSetFilteredMovies(res, value, shortFilms);
         })
         .catch((err) => {
@@ -41,7 +41,7 @@ function Movies({ onLikeClick, savedMoviesList, onDeleteClick }) {
         })
         .finally(() => setIsMoviesLoaging(false))
     } else {
-      handleSetFilteredMovies(allMovies, value, shortFilms);
+      handleSetFilteredMovies(fullMovieList, value, shortFilms);
       setIsMoviesLoaging(false);
     }
   }
@@ -60,18 +60,19 @@ function Movies({ onLikeClick, savedMoviesList, onDeleteClick }) {
     return moviesByQuery;
   };
   
-  function changeMovies(movies) {
+  function relinkImages(movies) {
     movies.forEach(movie => {
       if(!movie.image){
-        movie.thumbnail = 'https://g2.dcdn.lt/images/pix/kinas-76443525.jpg'
-        movie.image = 'https://g2.dcdn.lt/images/pix/kinas-76443525.jpg';
+        movie.thumbnail = 'https://phonoteka.org/uploads/posts/2021-04/1619602660_3-phonoteka_org-p-kinematograf-fon-3.jpg';
+        movie.image = 'https://phonoteka.org/uploads/posts/2021-04/1619602660_3-phonoteka_org-p-kinematograf-fon-3.jpg';
       } else {
-        movie.image = `https://api.nomoreparties.co${movie.image.url}`
-        movie.thumbnail = `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`
+        movie.thumbnail = `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`;
+        movie.image = `https://api.nomoreparties.co${movie.image.url}`;
+        
       }
     });
   };
- 
+
   function handleShortFilms(e) {
     setShortFilms(e.target.value);
     localStorage.setItem('shortFilms', e.target.value);
@@ -82,30 +83,30 @@ function Movies({ onLikeClick, savedMoviesList, onDeleteClick }) {
     setFilteredMovies(checkbox === 'on' ? filterShortMovies(moviesList) : moviesList);
     localStorage.setItem('movies', JSON.stringify(moviesList));
   }
-
-  React.useEffect(() => {
-    if (searchQuery) {
-      const arr = filterMovies(allMovies, searchQuery, shortFilms);
-      setFilteredMovies(arr);
-      handleCheckFilteredMovies(arr);
-    }
-  }, [searchQuery, shortFilms, allMovies])
   
   React.useEffect(() => {
-    const arr = JSON.parse(localStorage.getItem('movies'));
-    if (arr && !searchQuery) {
+    const base = JSON.parse(localStorage.getItem('movies'));
+    if (base && !searchQuery) {
       setShortFilms(localStorage.getItem('shortFilms'));
-      setFilteredMovies(shortFilms === 'on' ? filterShortMovies(arr) : arr);
-      handleCheckFilteredMovies(arr);
+      setFilteredMovies(shortFilms === 'on' ? filterShortMovies(base) : base);
+      handleCheckFilteredMovies(base);
     }
   }, [shortFilms, searchQuery])
-  
+    
+  React.useEffect(() => {
+    if (searchQuery) {
+      const base = filterMovies(fullMovieList, searchQuery, shortFilms);
+      setFilteredMovies(base);
+      handleCheckFilteredMovies(base);
+    }
+  }, [searchQuery, shortFilms, fullMovieList])
+
   return (
     <section className='movies'>
       <SearchForm shortFilms={shortFilms} onSearchClick={handleSearchSubmit} onCheckbox={handleShortFilms} />
       <MoviesCardList
         isLoading={isMoviesLoaging}
-        isEmptyList={isNothingFound}
+        isEmptyList={isNotFound}
         onLike={onLikeClick}
         savedMovies={savedMoviesList}
         list={filteredMovies}

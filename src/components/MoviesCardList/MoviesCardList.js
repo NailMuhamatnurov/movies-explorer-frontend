@@ -9,7 +9,7 @@ function MoviesCardList({ isLoading, list, isEmptyList, onDelete, isError, saved
   const screenWidth = useWindowWidth();
   const [isMount, setIsMount] = React.useState(true);
   const [showList, setShowList] = React.useState([]);
-  const [cardsShowParams, setCardsShowParams] = React.useState({ sum: 0, more: 0 });
+  const [cardsView, setCardsView] = React.useState({ sum: 0, more: 0 });
   
   function getSavedMovieCard(arr, id) {
     return arr.find((item) => {
@@ -19,11 +19,11 @@ function MoviesCardList({ isLoading, list, isEmptyList, onDelete, isError, saved
 
   function handleClickMoreMovies() {
     const start = showList.length;
-    const end = start + cardsShowParams.more;
+    const end = start + cardsView.more;
     const residual = list.length - start;
 
     if (residual > 0) {
-      const newCards = list.slice(start - 1, end);
+      const newCards = list.slice(start, end);
       setShowList([...showList, ...newCards]);
     }
   };
@@ -36,20 +36,20 @@ function MoviesCardList({ isLoading, list, isEmptyList, onDelete, isError, saved
 
   React.useEffect(() => {
     if (list.length && !savedMoviesPage) {
-      const res = list.filter((item, index) => index < cardsShowParams.sum);
+      const res = list.filter((item, index) => index < cardsView.sum);
       setShowList(res);
     }
-  }, [list, savedMoviesPage, cardsShowParams.sum]);
+  }, [list, savedMoviesPage, cardsView.sum]);
 
   React.useEffect(() => {
-    if (screenWidth > 1331) {
-      setCardsShowParams({ sum: 8, more: 4 });
-    } else if (screenWidth <= 1331 && screenWidth > 1027) {
-      setCardsShowParams({ sum: 12, more: 3 });
-    } else if (screenWidth <= 1027 && screenWidth > 629) {
-      setCardsShowParams({ sum: 8, more: 2 });
-    } else if (screenWidth <= 629) {
-      setCardsShowParams({ sum: 5, more: 2 });
+    if (screenWidth > 1333) {
+      setCardsView({ sum: 16, more: 4 });
+    } else if (screenWidth <= 1333 && screenWidth > 1024) {
+      setCardsView({ sum: 16, more: 3 });
+    } else if (screenWidth <= 1024 && screenWidth > 632) {
+      setCardsView({ sum: 8, more: 2 });
+    } else if (screenWidth <= 632) {
+      setCardsView({ sum: 5, more: 2 });
     }
     return () => setIsMount(false);
   }, [screenWidth, isMount]);

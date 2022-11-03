@@ -42,7 +42,7 @@ function Profile({ onSignOut, onUpdate, textMessage }) {
             <input
               className='profile__input'
               name='name'
-              value={values.name}
+              value={values.name || ''}
               type='text'
               minLength='2'
               maxLength='30'
@@ -59,7 +59,7 @@ function Profile({ onSignOut, onUpdate, textMessage }) {
             <input
               className='profile__input'
               name='email'
-              value={values.email}
+              value={values.email || ''}
               type='email'
               minLength='2'
               maxLength='30'
@@ -69,7 +69,7 @@ function Profile({ onSignOut, onUpdate, textMessage }) {
               onChange={handleChange}
             />
             <span id='email-error' className='profile__error'>
-            {errors.email}
+            {errors.email || ''}
             </span>
           </label>
 
