@@ -137,20 +137,33 @@ class MainApi {
             })
     };
 
-    signout(token) {
+    signout() {
         return fetch(`${this._baseUrl}/signout`, {
             method: 'POST',
             credentials: 'include',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
+                authorization: this._token,
             }
         })
             .then(res => {
                 return this.handleResponse(res);
             })
     };
+
+    checkToken(token) {
+        return fetch(this._userUrl, {
+            headers: {
+                authorization: token,
+            },
+            credentials: 'include',
+        })
+            .then(res => {
+                return this.handleResponse(res);
+            })
+    };
+
 };
 
 const mainApi = new MainApi({

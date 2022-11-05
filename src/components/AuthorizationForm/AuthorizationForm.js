@@ -30,6 +30,7 @@ function AuthorizationForm({type, buttonName, linkName, linkTo, title, subtitle,
                         type='text'
                         minLength='2'
                         maxLength='30'
+                        pattern='^[A-Za-zА-Яа-яЁё /s -]+$'
                         value={values.name || ''}
                         required
                         onChange={handleChange}
@@ -46,6 +47,7 @@ function AuthorizationForm({type, buttonName, linkName, linkTo, title, subtitle,
                         type='email'
                         minLength='2'
                         maxLength='30'
+                        pattern='^\S+@\S+\.\S+$'
                         onChange={handleChange}
                         value={values.email || ''}
                         required

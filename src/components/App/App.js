@@ -24,20 +24,24 @@ function App() {
     const [savedMovies, setSavedMovies] = React.useState([]);
     const [textMessage, setTextMessage] = React.useState({ isShown: false, message: '', code: OK_CODE });
     const [isLoaging, setIsLoaging] = React.useState(true);
-    
+
+    React.useEffect(() => {
+        tokenCheck();
+    }, []);
+
     React.useEffect(() => {
         setIsLoaging(true);
         mainApi.getUserData()
             .then(res => {
                 setCurrentUser(res);
-                setLoggedIn(true);
             })
             .catch(err => {
                 console.log(err);
             })
             .finally(() => setIsLoaging(false))
+
     }, [loggedIn]);
-    
+
     React.useEffect(() => {
         if (loggedIn) {
             mainApi.getUsersMovies()
@@ -52,6 +56,23 @@ function App() {
         }
     }, [loggedIn]);
 
+    function tokenCheck() {
+        const token = localStorage.getItem('token');
+        if (token) {
+            mainApi.checkToken(token)
+                .then((res) => {
+                    setLoggedIn(true)
+                })
+                .catch(() => {
+                    setLoggedIn(false);
+                    handleSignOut();
+                })
+        } else {
+            setLoggedIn(false);
+            handleSignOut();
+        }
+    }
+
     function handleResetTextMessage() {
         if (textMessage.isShown) {
             setTextMessage({ ...textMessage, isShown: false, message: '', type: '', code: OK_CODE });
@@ -62,8 +83,8 @@ function App() {
         setIsLoaging(true);
         mainApi.signin(email, password)
             .then(res => {
-                setLoggedIn(true);
                 localStorage.setItem('token', res.token);
+                setLoggedIn(true);
                 history.push('/movies');
             })
             .catch(({ message, statusCode }) => {
@@ -150,7 +171,7 @@ function App() {
                 console.log(err);
             })
     };
-    
+
     return (
         <CurrentUserContext.Provider value={currentUser}>
 
@@ -194,11 +215,11 @@ function App() {
                             </Route>
 
                             <Route path='/signup'>
-                                {loggedIn ? <Redirect to='/movies' /> : <Register textMessage={textMessage} onRegister={handleSignup}/>}
+                                {loggedIn ? <Redirect to='/movies' /> : <Register textMessage={textMessage} onRegister={handleSignup} />}
                             </Route>
 
                             <Route path='/signin'>
-                                {loggedIn ? <Redirect to='/movies' /> : <Login textMessage={textMessage} onLogin={handleSignin}/>}
+                                {loggedIn ? <Redirect to='/movies' /> : <Login textMessage={textMessage} onLogin={handleSignin} />}
                             </Route>
 
                             <Route path="*">

@@ -7,7 +7,7 @@ import TextMessage from '../TextMessage/TextMessage';
 function Profile({ onSignOut, onUpdate, textMessage }) {
   const currentUser = React.useContext(CurrentUserContext);
   const [isInputActive, setIsInputActive] = React.useState(false);
-  const {values, errors, isValid, handleChange, setValues} = useFormValidation();
+  const {values, errors, isValid, handleChange, setValues, setIsValid} = useFormValidation();
     
   function handleSubmit(e) {
     e.preventDefault();
@@ -17,6 +17,12 @@ function Profile({ onSignOut, onUpdate, textMessage }) {
   function handleRedactClick() {
     setIsInputActive(true);
   };
+
+  React.useEffect(() => {
+    if (currentUser.name === values.name && currentUser.email === values.email) {
+      setIsValid(false);
+    }
+  }, [setIsValid, values, currentUser]);
 
   React.useEffect(() => {
     if (currentUser) {
@@ -46,6 +52,7 @@ function Profile({ onSignOut, onUpdate, textMessage }) {
               type='text'
               minLength='2'
               maxLength='30'
+              pattern='^[A-Za-zА-Яа-яЁё /s -]+$'
               required
               id='name'
               disabled={!isInputActive}
@@ -63,6 +70,7 @@ function Profile({ onSignOut, onUpdate, textMessage }) {
               type='email'
               minLength='2'
               maxLength='30'
+              pattern='^\S+@\S+\.\S+$'
               required
               id='email'
               disabled={!isInputActive}
