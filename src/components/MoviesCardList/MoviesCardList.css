@@ -32,6 +32,10 @@
   cursor: pointer;
 }
 
+.movies-list__more-button_hidden {
+  display: none;
+}
+
 @media screen and (max-width: 769px) {
   .movies-list__box {
     grid-column-gap: 30px;

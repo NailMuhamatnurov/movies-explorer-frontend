@@ -3,7 +3,6 @@ import { Link, useHistory } from "react-router-dom";
 import React from 'react';
 
 function PageNotFound() {
-
   const history = useHistory();
 
   function handleClick() {

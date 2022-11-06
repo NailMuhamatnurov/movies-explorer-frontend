@@ -1,46 +1,100 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './Profile.css';
+import { useFormValidation } from '../../HOCs/useFormValidation';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import TextMessage from '../TextMessage/TextMessage';
 
-function Profile({user: {email, name}}) {
+function Profile({ onSignOut, onUpdate, textMessage }) {
+  const currentUser = React.useContext(CurrentUserContext);
+  const [isInputActive, setIsInputActive] = React.useState(false);
+  const {values, errors, isValid, handleChange, setValues, setIsValid} = useFormValidation();
+    
+  function handleSubmit(e) {
+    e.preventDefault();
+    onUpdate(values.name, values.email);
+  };
+
+  function handleRedactClick() {
+    setIsInputActive(true);
+  };
+
+  React.useEffect(() => {
+    if (currentUser.name === values.name && currentUser.email === values.email) {
+      setIsValid(false);
+    }
+  }, [setIsValid, values, currentUser]);
+
+  React.useEffect(() => {
+    if (currentUser) {
+      setValues({
+        name: currentUser.name,
+        email: currentUser.email,
+      });
+    }
+  }, [setValues, currentUser]); 
+
+  React.useEffect(() => {
+    if (textMessage.isShown && textMessage.code === 200) {
+      setIsInputActive(false);
+    }
+  }, [setIsInputActive, textMessage.isShown, textMessage.code]);
 
   return (
     <section className='profile'>
       <div className='profile__box'>
-        <h2 className='profile__title'>{`Привет, ${name}!`}</h2>
-        <form className='profile__form'>
+        <h2 className='profile__title'>{`Привет, ${currentUser.name}!`}</h2>
+        <form className='profile__form' onSubmit={handleSubmit}>
           <label className='profile__label'>Имя
             <input
-              defaultValue={name}
-              type='text'
               className='profile__input'
               name='name'
+              value={values.name || ''}
+              type='text'
               minLength='2'
               maxLength='30'
+              pattern='^[A-Za-zА-Яа-яЁё /s -]+$'
               required
               id='name'
+              disabled={!isInputActive}
+              onChange={handleChange}
             />
-            <span id="name-error" className='profile__error'></span>
+            <span id="name-error" className='profile__error'>
+            {errors.name ? 'Поле должно быть заполнено' : ''}
+            </span>
           </label>
           <label className='profile__label'>E-mail
             <input
-              defaultValue={email}
-              type='email'
               className='profile__input'
               name='email'
+              value={values.email || ''}
+              type='email'
               minLength='2'
               maxLength='30'
+              pattern='^\S+@\S+\.\S+$'
               required
               id='email'
+              disabled={!isInputActive}
+              onChange={handleChange}
             />
-            <span id='email-error' className='profile__error'></span>
+            <span id='email-error' className='profile__error'>
+            {errors.email || ''}
+            </span>
           </label>
-            <button className='profile__button profile__button_type_submit opacity-link' type='submit'>Редактировать</button>
-            <button className='profile__button profile__button_type_logout' type='button'><Link className='profile__link opacity-link' to='/'>Выйти из аккаунта</Link></button>
+
+          <TextMessage {...textMessage} />
+
+          {isInputActive ? (
+            <button className='profile__button profile__button_type_submit opacity-link' type='submit' disabled={!isValid }>Сохранить</button>
+          ):(
+            <>
+            <button className='profile__button profile__button_type_submit opacity-link' type='submit' onClick={handleRedactClick}>Редактировать</button>
+            <button className='profile__button profile__button_type_logout opacity-link' type='button' onClick={onSignOut}>Выйти из аккаунта</button>
+        </>
+          )}
         </form>
       </div>
     </section>
   );
-}
+};
 
 export default Profile;

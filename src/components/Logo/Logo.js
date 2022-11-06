@@ -1,7 +1,7 @@
 import './Logo.css';
 import React from 'react';
-import logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
+import logo from '../../images/logo.svg';
 
 function Logo() {
   

@@ -1,31 +1,39 @@
 import './MoviesCard.css';
 import React from 'react';
 
-function MoviesCard({movie: {image, name, time, saved}, removable}) {
+function MoviesCard({ card, onLike, onDelete, liked, savedPage }) {
 
-  const getDurationLabel = (mins) => {
+  function handleDeleteClick() {
+    onDelete(card);
+  };
+
+  function handleLikeClick() {
+    onLike(card);
+  };
+
+  function getTimeFromMin(mins) {
     const hours = Math.trunc(mins/60);
-    const minutes = mins%60;
+    const minutes = mins % 60;
     return `${hours}ч ${minutes}м`;
   };
 
   return (
     <div className='movie'>
-      <img className='movie__pic' src={image} alt='Фильм'/>
+      <img className='movie__pic' src={`${card.image}`} alt='Фильм'/>
       <div className='movie__frame'>
         <div className='movie__info'>
-          <h2 className='movie__title'>{name}</h2>
+          <a className='movie__title' href={card.trailer || card.trailerLink} target='_blank' rel='noreferrer'>{card.nameRU}</a>
           <button
             className={`movie__button opacity-link 
-            ${removable && saved ? 'movie__delete-button' : null}
-            ${!removable && saved ? 'movie__save-button_active' : null} 
-            ${!saved ? 'movie__save-button' : null}`}
+            ${savedPage ? 'movie__delete-button' : 'movie__save-button'}
+            ${liked && !savedPage ? 'movie__save-button_active' : null}`}
             type='button'
-            aria-label='Сохранить в избранное'
+            aria-label='Сохранить'
+            onClick={savedPage || liked ? handleDeleteClick : handleLikeClick}
           />
         </div>
         <div className='movie__line'></div>
-        <p className='movie__time'>{getDurationLabel(time)}</p>
+        <p className='movie__time'>{getTimeFromMin(card.duration)}</p>
       </div>
     </div>
   );

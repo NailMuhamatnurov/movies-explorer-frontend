@@ -1,14 +1,18 @@
 import './Header.css';
-import React from 'react';
+import { Route } from 'react-router-dom';
+import Navigation from '../Navigation/Navigation';
 import Logo from '../Logo/Logo';
-import Navigation from "../Navigation/Navigation";
 
-function Header({user}) {
+function Header({ loggedIn }) {
+    const endpoints = ['/movies', '/saved-movies', '/profile', '/'];
+
     return (
-        <header className={`${ !user ? 'header' : 'header__movies'}`}>
-            <Logo />
-            <Navigation user={user}/>
-        </header>
+        <Route exact path={endpoints}>
+            <header className={`${ !loggedIn ? 'header' : 'header__movies'}`}>
+                <Logo />
+                <Navigation loggedIn={loggedIn} />
+            </header>
+        </Route>
     );
 }
 

@@ -51,14 +51,13 @@
   line-height: 16px;
   border: none;
   background-color: transparent;
-  
+  cursor: pointer;
 }
 
 .profile__button_type_submit {
   margin-bottom: 13px;
   margin-top: 205px;
   color: #FFFFFF;
-  cursor: pointer;
 }
 
 .profile__button_type_logout {
